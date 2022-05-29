@@ -89,7 +89,7 @@ function customSchedule() {
     //chosenDuty = 2;
     //i is the user selected day of the month for start of schedule creation
     let i = userDay - 1;
-    [duty, duty1, duty2, tempDays, tempSch, monthSchedule] = [[], [], [], [], [], []]
+    [duty, duty1, duty2, tempDays, tempSch] = [[], [], [], [], []]
     let r;
     index = chosenDuty;
     //Creates the duty schedule from the first till end of month
@@ -166,9 +166,9 @@ function createCorrection(ms) {
 
         {
             if (pos === 'D') {
-                clockTime = '7am - 7pm';
+                clockTime = '07:00am - 07:00pm';
             } else if (pos === 'N') {
-                clockTime = '7pm - 7am';
+                clockTime = '07:00pm - 07:00am';
             } else if (pos === 'O') {
                 clockTime = '';
             } else if (pos === 'L') {
@@ -209,12 +209,12 @@ function createCorrection(ms) {
     correction = alphaSchedule.sort((a, b) => a.day - b.day);
     console.log(hoursGen, hoursOt, hoursTotal, countDays, countLeave);
     console.log(calcOT(countDays, 87500, calcOtAmount, countLeave));
-    return luna = [hoursTotal, countDays, countLeave];
+
 
 }
 
 
-//let createCorSheet;
+
 
 function createCalender(ms, mainDate) {
     //create a calender
@@ -309,7 +309,6 @@ function createCalender(ms, mainDate) {
     calCorrectBtn.setAttribute("type", "button")
     calCorrectBtn.innerText = "Create correction sheet";
     calCorrect.append(calCorrectBtn);
-    // createCorSheet = document.querySelector("#createCorrection");
 }
 
 
@@ -328,49 +327,26 @@ inputSchedule.addEventListener("submit", function (e) {
 //     const { date, clockTime, hrGen, hrOt, hrTotal } = cor;
 // }
 
-function correctionSheet(corArray, luna) {
-
-    const mytablebody = document.querySelector("#tBody");
-    const tableCaption = document.querySelector(".caption-top caption");
-    tableCaption.innerText = `Days worked: ${luna[1]}  Hours: ${luna[0]}  Leave Days: ${luna[2]}`;
-    if (mytablebody.hasChildNodes()) {
-        const tableRows = mytablebody.querySelectorAll("tr");
-        tableRows.forEach(element => {
-            element.remove();
-        });
-    }
+function correctionSheet(corArray) {
     for (var j = 0; j < corArray.length; j++) {
         // creates a <tr> element
-        let mycurrent_row = document.createElement("tr");
+        mycurrent_row = document.createElement("tr");
         //individual date object
-        const { date, clockTime, hrGen, hrOt, hrTotal } = corArray[j];
-        const corTemp = [date, clockTime, hrGen, hrOt, hrTotal]
-        for (var i = 0; i < 5; i++) {
-            // for (const item in corTemp) {
+        const corTemp = corArray[j];
+        // for(var i = 0; i < 6; i++) {
+        for (const item in corTemp) {
             // creates a <td> element
-            let mycurrent_cell = document.createElement("td");
+            mycurrent_cell = document.createElement("td");
             // creates a Text Node
-            let currenttext = document.createTextNode(corTemp[i]);
+            currenttext = document.createTextNode(corTemp);
             // appends the Text Node we created into the cell <td>
             mycurrent_cell.appendChild(currenttext);
             // appends the cell <td> into the row <tr>
             mycurrent_row.appendChild(mycurrent_cell);
-            //}
         }
+        //}
         // appends the row <tr> into <tbody>
         mytablebody.appendChild(mycurrent_row);
     }
 
 }
-
-const calDiv = document.querySelector(".cal");
-
-calDiv.addEventListener("click", (e) => {
-    if (e.target.id === "createCorrection") {
-        let luna = createCorrection(monthSchedule);
-        correctionSheet(correction, luna);
-    }
-
-
-
-})

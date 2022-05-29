@@ -1,56 +1,34 @@
 //Code to get total number of days in a month.
 // 1 is added to the getMonth() function to help us get the last day of the previous month, by using zero as the day for getDate()
 // start index at a number then reset it to zero, to calculate for the month 
-const nowDate = new Date();
-const currentYear = nowDate.getFullYear();
-const currentMonth = nowDate.getMonth() + 1;
-const inputSchedule = document.querySelector("#inputSch");
-const inputScheduleDate = document.querySelector("#date");
-let customDate;
+const date = new Date();
+const currentYear = date.getFullYear();
+const currentMonth = date.getMonth() + 1;
 let [workMonth, tempDays, tempSch, correction, duty, duty1, duty2] = [[], [], [], [], [], [], []];
 let userYear = 2022;
-let userMonth = 4;
-let userDay;
+let userMonth = 10;
 let monthSchedule = new Array();
 let kiki;
-let chosenDuty;
-let mainDate;
-let monthName;
 const shiftSch = ['D1', 'D2', 'D3', 'N1', 'N2', 'N3', 'O1', 'O2', 'O3'];
 // function daysInMonth(year, month) {
 //     return new Date(year, month, 0).getDate();
 // }
-inputSchedule.date.addEventListener("change", () => {
-    customDate = new Date(inputSchedule.date.valueAsDate);
-    userYear = customDate.getFullYear();
-    userMonth = customDate.getMonth() + 1;
-    userDay = customDate.getDate();
-    mainDate = new Date(Date.parse(`${userMonth}/1/${userYear}`));
-    const options = { month: 'long' };
-    monthName = new Intl.DateTimeFormat('en-US', options).format(customDate);
-    workMonth = [];
-    const monthDays = (year, month) => new Date(year, month, 0).getDate();
-    function getDays(days) {
-        for (let i = 1; i <= days; i++) {
-            workMonth.push(i);
-        }
-    }
-    getDays(monthDays(userYear, userMonth));
-})
-inputSchedule.duty.addEventListener("change", () => {
-    chosenDuty = inputSchedule.duty.value;
-})
 
 //let userDaysInMonths = daysInMonth(userYear, userMonth);
 //getDays(userDaysInMonths);
+const mainDate = new Date(Date.parse(`${userMonth}/1/${userYear}`));
+// const options = { month: 'long' };
+// console.log(new Intl.DateTimeFormat('en-US', options).format(Xmas95));
+const monthDays = (year, month) => new Date(year, month, 0).getDate();
+function getDays(days) {
+    for (let i = 1; i <= days; i++) {
+        workMonth.push(i);
+    }
+}
+let getFirstDay = (userDate) => userDate.getDay();
+let firstDay = getFirstDay(mainDate);
 
-// const mainDate = new Date(Date.parse(`${userYear}-${userYear}-1`));
-//To get the month name in full
-
-
-
-
-
+getDays(monthDays(userYear, userMonth));
 
 function createSchedule() {
     //The while loop iterates (sandwich) the duty days over the days of the month.
@@ -86,10 +64,10 @@ function customSchedule() {
     //Counter3 counts the duty iterations from previous user select day till first day
     let [counter, counter2, counter3, index] = [0, 0, 0, 0];
     //chosenDuty is the user selected duty for the selected day
-    //chosenDuty = 2;
+    let chosenDuty = 2;
     //i is the user selected day of the month for start of schedule creation
-    let i = userDay - 1;
-    [duty, duty1, duty2, tempDays, tempSch, monthSchedule] = [[], [], [], [], [], []]
+    let i = 18;
+    tempDays = [];
     let r;
     index = chosenDuty;
     //Creates the duty schedule from the first till end of month
@@ -166,9 +144,9 @@ function createCorrection(ms) {
 
         {
             if (pos === 'D') {
-                clockTime = '7am - 7pm';
+                clockTime = '07:00am - 07:00pm';
             } else if (pos === 'N') {
-                clockTime = '7pm - 7am';
+                clockTime = '07:00pm - 07:00am';
             } else if (pos === 'O') {
                 clockTime = '';
             } else if (pos === 'L') {
@@ -194,13 +172,7 @@ function createCorrection(ms) {
             }
         }
         let fullDate = `${workMonth[i]}/${userMonth}/${userYear}`;
-
-        // To create correction for only working days
-        //filtering out off days
-        if (pos !== "O") {
-            alphaSchedule.push({ date: fullDate, day: ms[i].day, duty: ms[i].duty, clockTime: clockTime, hrGen: hrGen, hrOt: hrOt, hrTotal: hrTotal });
-        }
-        // alphaSchedule.push({ date: fullDate, day: ms[i].day, duty: ms[i].duty, clockTime: clockTime, hrGen: hrGen, hrOt: hrOt, hrTotal: hrTotal });
+        alphaSchedule.push({ date: fullDate, day: ms[i].day, duty: ms[i].duty, clockTime: clockTime, hrGen: hrGen, hrOt: hrOt, hrTotal: hrTotal });
         hoursGen += hrGen;
         hoursTotal += hrTotal;
         hoursOt += hrOt;
@@ -209,37 +181,25 @@ function createCorrection(ms) {
     correction = alphaSchedule.sort((a, b) => a.day - b.day);
     console.log(hoursGen, hoursOt, hoursTotal, countDays, countLeave);
     console.log(calcOT(countDays, 87500, calcOtAmount, countLeave));
-    return luna = [hoursTotal, countDays, countLeave];
+
 
 }
+customSchedule();
 
+console.log(`duty array`, duty);
+console.log(`duty1 array`, duty1)
+console.log(`duty2 array`, duty2)
+console.log(`duty2 reverse`, duty2.reverse())
+console.log(`correction`, correction);
 
-//let createCorSheet;
-
-function createCalender(ms, mainDate) {
+function createCalender(ms, firstDay) {
     //create a calender
     let counter = 0
-    let getFirstDay = (userDate) => userDate.getDay();
-    let firstDay = getFirstDay(mainDate);
-
-    const calMonthName = document.querySelector(".cal-month-name");
     const cal = document.querySelector(".cal");
+    let div = document.createElement("div");
 
 
     {
-        calMonthName.innerText = monthName;
-    }
-    //Clear calender before starting
-    {
-        if (document.querySelector(".cal-days")) {
-            document.querySelector(".cal-days").remove();
-        }
-        if (document.querySelector("#calCorrect")) {
-            document.querySelector("#calCorrect").remove();
-        }
-    }
-    {
-        let div = document.createElement("div");
         div.classList.add("cal-days");
         cal.append(div);
     }
@@ -251,6 +211,40 @@ function createCalender(ms, mainDate) {
         div1.classList.add("btn", "cal-btn")
         calDays.append(div1)
         let calBn = document.querySelectorAll(".cal-days .cal-btn")
+        // let div2 = document.createElement("div");
+        // calBn[index].append(div2)
+        // let p = document.createElement("p");
+        // p.classList.add("m-0");
+        // p.innerText = 1 + index;
+        // //p.innerText = " ";
+        // div2.append(p);
+        // let div3 = document.createElement("div");
+        // calBn[index].append(div3);
+        // let s = document.createElement("select");
+        // s.classList.add("form-select", "btn", "king");
+        // var opt = document.createElement("option");
+        // var opt1 = document.createElement("option");
+        // var opt2 = document.createElement("option");
+        // var opt3 = document.createElement("option");
+        // var opt4 = document.createElement("option");
+
+        // opt.setAttribute("selected", "")
+        // opt.value = "N1";
+        // opt.text = "N1";
+        // opt1.value = "D";
+        // opt1.text = "Day";
+        // opt2.value = "N";
+        // opt2.text = "Night";
+        // opt3.value = "O";
+        // opt3.text = "Off";
+        // opt4.value = "L";
+        // opt4.text = "Leave";
+        // s.add(opt)
+        // s.add(opt1)
+        // s.add(opt2)
+        // s.add(opt3)
+        // s.add(opt4)
+        // div3.append(s);
         counter++
     }
 
@@ -298,79 +292,6 @@ function createCalender(ms, mainDate) {
         div3.append(s);
         counter++
     }
-    let div4 = document.createElement("div")
-    div4.classList.add("d-flex", "justify-content-center");
-    div4.setAttribute("id", "calCorrect");
-    cal.append(div4);
-    let calCorrect = document.querySelector("#calCorrect")
-    let calCorrectBtn = document.createElement("button");
-    calCorrectBtn.classList.add("btn", "btn-primary")
-    calCorrectBtn.setAttribute("id", "createCorrection")
-    calCorrectBtn.setAttribute("type", "button")
-    calCorrectBtn.innerText = "Create correction sheet";
-    calCorrect.append(calCorrectBtn);
-    // createCorSheet = document.querySelector("#createCorrection");
-}
-
-
-inputSchedule.addEventListener("submit", function (e) {
-    e.preventDefault();
-    customSchedule();
-    createCalender(monthSchedule, mainDate);
-
-    console.log(`duty array`, duty);
-    console.log(`duty1 array`, duty1)
-    console.log(`duty2 array`, duty2)
-    console.log(`duty2 reverse`, duty2.reverse())
-    console.log(`correction`, correction);
-})
-// function filterCorrection(cor) {
-//     const { date, clockTime, hrGen, hrOt, hrTotal } = cor;
-// }
-
-function correctionSheet(corArray, luna) {
-
-    const mytablebody = document.querySelector("#tBody");
-    const tableCaption = document.querySelector(".caption-top caption");
-    tableCaption.innerText = `Days worked: ${luna[1]}  Hours: ${luna[0]}  Leave Days: ${luna[2]}`;
-    if (mytablebody.hasChildNodes()) {
-        const tableRows = mytablebody.querySelectorAll("tr");
-        tableRows.forEach(element => {
-            element.remove();
-        });
-    }
-    for (var j = 0; j < corArray.length; j++) {
-        // creates a <tr> element
-        let mycurrent_row = document.createElement("tr");
-        //individual date object
-        const { date, clockTime, hrGen, hrOt, hrTotal } = corArray[j];
-        const corTemp = [date, clockTime, hrGen, hrOt, hrTotal]
-        for (var i = 0; i < 5; i++) {
-            // for (const item in corTemp) {
-            // creates a <td> element
-            let mycurrent_cell = document.createElement("td");
-            // creates a Text Node
-            let currenttext = document.createTextNode(corTemp[i]);
-            // appends the Text Node we created into the cell <td>
-            mycurrent_cell.appendChild(currenttext);
-            // appends the cell <td> into the row <tr>
-            mycurrent_row.appendChild(mycurrent_cell);
-            //}
-        }
-        // appends the row <tr> into <tbody>
-        mytablebody.appendChild(mycurrent_row);
-    }
 
 }
-
-const calDiv = document.querySelector(".cal");
-
-calDiv.addEventListener("click", (e) => {
-    if (e.target.id === "createCorrection") {
-        let luna = createCorrection(monthSchedule);
-        correctionSheet(correction, luna);
-    }
-
-
-
-})
+createCalender(monthSchedule, firstDay);
