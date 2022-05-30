@@ -158,13 +158,12 @@ function createCorrection(ms) {
     let hrTotal
     const alphaSchedule = [];
     correction = [];
-    let pos; let len; let pos2;
+    let pos;
     for (let i = 0; i < ms.length; i++) {
 
         hrGen = 8; hrOt = 4; hrTotal = 12;
         pos = ms[i].duty.charAt(0);
-        pos2 = ms[i].duty.charAt(1);
-        dutyTag = ms[i].duty;
+
         {
             if (pos === 'D') {
                 clockTime = '7am - 7pm';
@@ -172,19 +171,13 @@ function createCorrection(ms) {
                 clockTime = '7pm - 7am';
             } else if (pos === 'O') {
                 clockTime = '';
-            } else if (pos === 'A') {
-                clockTime = 'AL';
-            } else if (pos === 'C' && pos2 === 'L') {
-                clockTime = 'CL';
-            } else if (pos === 'C' && pos2 === 'M') {
-                clockTime = 'CML';
-            } else if (pos === 'E') {
-                clockTime = 'EL';
+            } else if (pos === 'L') {
+                clockTime = 'LEAV';
             }
         }
 
         {
-            if (dutyTag.indexOf("L") >= 0) {
+            if (pos === 'L') {
                 hrOt = 0;
                 hrTotal = 8;;
             } else if (pos === 'O') {
@@ -196,7 +189,7 @@ function createCorrection(ms) {
             if (pos === 'D' || pos === 'N') {
                 countDays++
             }
-            if (dutyTag.indexOf("L") >= 0) {
+            if (pos === 'L') {
                 countLeave++
             }
         }
@@ -286,9 +279,6 @@ function createCalender(ms, mainDate) {
         var opt2 = document.createElement("option");
         var opt3 = document.createElement("option");
         var opt4 = document.createElement("option");
-        var opt5 = document.createElement("option");
-        var opt6 = document.createElement("option");
-        var opt7 = document.createElement("option");
 
         opt.setAttribute("selected", "")
         opt.value = ms[index].duty;
@@ -299,22 +289,13 @@ function createCalender(ms, mainDate) {
         opt2.text = "Night";
         opt3.value = "O";
         opt3.text = "Off";
-        opt4.value = "AL";
-        opt4.text = "Annual Leave";
-        opt5.value = "CL";
-        opt5.text = "Casual Leave";
-        opt6.value = "CML";
-        opt6.text = "Compassionate Leave";
-        opt7.value = "EL";
-        opt7.text = "Examination Leave";
+        opt4.value = "L";
+        opt4.text = "Leave";
         s.add(opt)
         s.add(opt1)
         s.add(opt2)
         s.add(opt3)
         s.add(opt4)
-        s.add(opt5)
-        s.add(opt6)
-        s.add(opt7)
         div3.append(s);
         counter++
     }
@@ -353,7 +334,6 @@ function correctionSheet(corArray, luna) {
     const mytablebody = document.querySelector("#tBody");
     const tableCaption = document.querySelector(".caption-top caption");
     tableCaption.innerText = `Total Days: ${luna[3]} Days worked: ${luna[1]}  Hours: ${luna[0]}  Leave Days: ${luna[2]}`;
-    luna = [];
     if (mytablebody.hasChildNodes()) {
         const tableRows = mytablebody.querySelectorAll("tr");
         tableRows.forEach(element => {
@@ -390,7 +370,6 @@ calDiv.addEventListener("click", (e) => {
     if (e.target.id === "createCorrection") {
         let luna = createCorrection(monthSchedule);
         correctionSheet(correction, luna);
-
     }
     e.stopPropagation();
 })
@@ -403,8 +382,6 @@ calDiv.addEventListener("change", function (e) {
         // e.stopImmediatePropagation();
         monthSchedule[calendarDay].duty = calendarDuty;
         console.log(monthSchedule)
-        let luna = createCorrection(monthSchedule);
-        correctionSheet(correction, luna);
 
         //monthSchedule[kuu].days = lala;
     }

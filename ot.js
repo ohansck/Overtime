@@ -29,7 +29,7 @@ function calcOT(workDays, basicSalary, calcOtAmount, leaveDays = 0) {
         otAmount.innerHTML = '&#x20A6 0';
         console.log('amount not ggreater than zero');
     }
-
+    return ot;
 }
 
 // let workDay = otDay.valueAsNumber;
