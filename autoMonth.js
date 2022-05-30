@@ -356,7 +356,7 @@ function correctionSheet(corArray, luna) {
 
     const mytablebody = document.querySelector("#tBody");
     const tableCaption = document.querySelector(".caption-top caption");
-    tableCaption.innerText = `Total Days: ${luna[3]} Days worked: ${luna[1]}  Hours: ${luna[0]}  Leave Days: ${luna[2]}`;
+    tableCaption.innerText = `Total Days:${luna[3]}   Days worked:${luna[1]}    Hours:${luna[0]}    Leave Days:${luna[2]}`;
     luna = [];
     if (mytablebody.hasChildNodes()) {
         const tableRows = mytablebody.querySelectorAll("tr");
