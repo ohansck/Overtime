@@ -267,7 +267,7 @@ function createCalender(ms, mainDate) {
         //each date on the calendar
         let div1 = document.createElement("div");
         let calDays = document.querySelector(".cal-days")
-        div1.classList.add("btn", "cal-btn")
+        div1.classList.add("btn", "cal-btn", "border-end-3", "border-bottom-3")
         calDays.append(div1)
         let calBn = document.querySelectorAll(".cal-days .cal-btn")
         let div2 = document.createElement("div");
@@ -337,6 +337,10 @@ inputSchedule.addEventListener("submit", function (e) {
     e.preventDefault();
     customSchedule();
     createCalender(monthSchedule, mainDate);
+    let calSpace = document.querySelector("#dropdownCalendar")
+    if (calSpace.classList.contains("invisible")) {
+        calSpace.classList.remove("invisible")
+    }
 
     console.log(`duty array`, duty);
     console.log(`duty1 array`, duty1)
@@ -385,12 +389,21 @@ function correctionSheet(corArray, luna) {
 }
 
 const calDiv = document.querySelector(".cal");
+const updateCorrection = () => {
+    let luna = createCorrection(monthSchedule);
+    correctionSheet(correction, luna);
+    let correctionSpace = document.querySelector("#correctionSpace");
+    //makes the correction sheet visible
+    if (correctionSpace.classList.contains("invisible")) {
+        correctionSpace.classList.remove("invisible")
+    }
 
+}
 calDiv.addEventListener("click", (e) => {
     if (e.target.id === "createCorrection") {
-        let luna = createCorrection(monthSchedule);
-        correctionSheet(correction, luna);
-
+        // let luna = createCorrection(monthSchedule);
+        // correctionSheet(correction, luna);
+        updateCorrection();
     }
     e.stopPropagation();
 })
@@ -403,9 +416,9 @@ calDiv.addEventListener("change", function (e) {
         // e.stopImmediatePropagation();
         monthSchedule[calendarDay].duty = calendarDuty;
         console.log(monthSchedule)
-        let luna = createCorrection(monthSchedule);
-        correctionSheet(correction, luna);
-
+        // let luna = createCorrection(monthSchedule);
+        // correctionSheet(correction, luna);
+        updateCorrection();
         //monthSchedule[kuu].days = lala;
     }
     e.stopPropagation();
