@@ -42,7 +42,7 @@ inputSchedule.duty.addEventListener("change", () => {
     chosenDuty = inputSchedule.duty.value;
 })
 inputSchedule.sap.addEventListener("change", () => {
-    sap = inputSchedule.sap.innerText;
+    sap = inputSchedule.sap.valueAsNumber;
 })
 //let userDaysInMonths = daysInMonth(userYear, userMonth);
 //getDays(userDaysInMonths);
