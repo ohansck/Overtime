@@ -181,8 +181,8 @@ function createCorrection(ms) {
                 clockTime = 'CL';
             } else if (pos === 'C' && pos2 === 'M') {
                 clockTime = 'CML';
-            } else if (pos === 'E') {
-                clockTime = 'EL';
+            } else if (pos === 'S') {
+                clockTime = 'SL';
             }
         }
 
@@ -308,8 +308,8 @@ function createCalender(ms, mainDate) {
         opt5.text = "Casual Leave";
         opt6.value = "CML";
         opt6.text = "Compassionate Leave";
-        opt7.value = "EL";
-        opt7.text = "Examination Leave";
+        opt7.value = "SL";
+        opt7.text = "Sick Leave";
         s.add(opt)
         s.add(opt1)
         s.add(opt2)
