@@ -16,6 +16,7 @@ let kiki;
 let chosenDuty;
 let mainDate;
 let monthName;
+let sap = 0;
 const shiftSch = ['D1', 'D2', 'D3', 'N1', 'N2', 'N3', 'O1', 'O2', 'O3'];
 // function daysInMonth(year, month) {
 //     return new Date(year, month, 0).getDate();
@@ -40,7 +41,9 @@ inputSchedule.date.addEventListener("change", () => {
 inputSchedule.duty.addEventListener("change", () => {
     chosenDuty = inputSchedule.duty.value;
 })
-
+inputSchedule.sap.addEventListener("change", () => {
+    sap = inputSchedule.sap.value;
+})
 //let userDaysInMonths = daysInMonth(userYear, userMonth);
 //getDays(userDaysInMonths);
 
@@ -357,9 +360,9 @@ function correctionSheet(corArray, luna) {
     const mytablebody = document.querySelector("#tBody");
     const tableCaption = document.querySelector(".caption-top caption");
     const tableBottomCaption = document.querySelector("#caption-bottom");
-    tableCaption.innerHTML = `${monthName} ${userYear} correction for xxxx <br>Total Days: ${luna[3]}  &nbsp; Days worked: ${luna[1]}  &nbsp;  
+    tableCaption.innerHTML = `${monthName} ${userYear} correction for ${sap} <br>Total Days: ${luna[3]}  &nbsp; Days worked: ${luna[1]}  &nbsp;  
                             Leave Days: ${luna[2]}    &nbsp;   Hours: ${luna[0]}`;
-   tableBottomCaption.innerHTML = `${monthName} ${userYear} correction for xxxx <br>Total Days: ${luna[3]}  &nbsp; Days worked: ${luna[1]}  &nbsp;  
+   tableBottomCaption.innerHTML = `${monthName} ${userYear} correction for ${sap} <br>Total Days: ${luna[3]}  &nbsp; Days worked: ${luna[1]}  &nbsp;  
                              Leave Days: ${luna[2]}    &nbsp;  Hours: ${luna[0]}`;
     luna = [];
     if (mytablebody.hasChildNodes()) {
