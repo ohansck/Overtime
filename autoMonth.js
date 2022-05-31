@@ -358,9 +358,9 @@ function correctionSheet(corArray, luna) {
     const tableCaption = document.querySelector(".caption-top caption");
     const tableBottomCaption = document.querySelector("#caption-bottom");
     tableCaption.innerHTML = `${monthName} ${userYear} correction for xxxx <br>Total Days: ${luna[3]}  &nbsp; Days worked: ${luna[1]}  &nbsp;  
-                              Hours: ${luna[0]}  &nbsp;  Leave Days: ${luna[2]}`;
+                            Leave Days: ${luna[2]}    &nbsp;   Hours: ${luna[0]}`;
    tableBottomCaption.innerHTML = `${monthName} ${userYear} correction for xxxx <br>Total Days: ${luna[3]}  &nbsp; Days worked: ${luna[1]}  &nbsp;  
-                              Hours: ${luna[0]}  &nbsp;  Leave Days: ${luna[2]}`;
+                             Leave Days: ${luna[2]}    &nbsp;  Hours: ${luna[0]}`;
     luna = [];
     if (mytablebody.hasChildNodes()) {
         const tableRows = mytablebody.querySelectorAll("tr");
