@@ -201,7 +201,7 @@ function createCorrection(ms) {
             if (pos === 'D' || pos === 'N' || pos === 'G') {
                 countDays++
             }
-            if (dutyTag.indexOf("L") >= 0) {
+            if (dutyTag.indexOf("L") >= 0 && pos !== 'G') {
                 countLeave++
             }
         }
