@@ -300,9 +300,9 @@ function createCalender(ms, mainDate) {
         opt.value = ms[index].duty;
         opt.text = ms[index].duty;
         opt1.value = "D";
-        opt1.text = "Day";
+        opt1.text = "Day 12 Hrs";
         opt2.value = "N";
-        opt2.text = "Night";
+        opt2.text = "Night 12 Hrs";
         opt3.value = "O";
         opt3.text = "Off";
         opt8.value = "GL";
