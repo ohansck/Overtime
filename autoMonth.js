@@ -183,6 +183,8 @@ function createCorrection(ms) {
                 clockTime = 'CML';
             } else if (pos === 'S') {
                 clockTime = 'SL';
+            } else if (pos === 'G') {
+                clockTime = '8am - 5pm';
             }
         }
 
@@ -196,7 +198,7 @@ function createCorrection(ms) {
         }
 
         {
-            if (pos === 'D' || pos === 'N') {
+            if (pos === 'D' || pos === 'N' || pos === 'G') {
                 countDays++
             }
             if (dutyTag.indexOf("L") >= 0) {
@@ -302,6 +304,8 @@ function createCalender(ms, mainDate) {
         opt2.text = "Night";
         opt3.value = "O";
         opt3.text = "Off";
+        opt8.value = "GL";
+        opt8.text = "General Duty";
         opt4.value = "AL";
         opt4.text = "Annual Leave";
         opt5.value = "CL";
@@ -314,6 +318,7 @@ function createCalender(ms, mainDate) {
         s.add(opt1)
         s.add(opt2)
         s.add(opt3)
+        s.add(opt8)
         s.add(opt4)
         s.add(opt5)
         s.add(opt6)
