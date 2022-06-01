@@ -294,6 +294,7 @@ function createCalender(ms, mainDate) {
         var opt5 = document.createElement("option");
         var opt6 = document.createElement("option");
         var opt7 = document.createElement("option");
+        var opt8 = document.createElement("option");
 
         opt.setAttribute("selected", "")
         opt.value = ms[index].duty;
