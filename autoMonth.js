@@ -222,7 +222,7 @@ function createCorrection(ms) {
     let totalDays = countDays + countLeave;
     console.log(hoursGen, hoursOt, hoursTotal, countDays, countLeave);
     console.log(calcOT(countDays, 87500, calcOtAmount, countLeave));
-    return luna = [hoursTotal, countDays, countLeave, totalDays];
+    return luna = [hoursTotal, countDays, countLeave, totalDays, hoursGen, hoursOt];
 
 }
 
@@ -370,7 +370,7 @@ function correctionSheet(corArray, luna) {
                             Leave Days: ${luna[2]}    &nbsp;   Hours: ${luna[0]}`;
    tableBottomCaption.innerHTML = `${monthName} ${userYear} correction for SAP: ${sap} <br>Total Days: ${luna[3]}  &nbsp; Days worked: ${luna[1]}  &nbsp;  
                              Leave Days: ${luna[2]}    &nbsp;  Hours: ${luna[0]}`;
-    luna = [];
+    // luna = [];
     if (mytablebody.hasChildNodes()) {
         const tableRows = mytablebody.querySelectorAll("tr");
         tableRows.forEach(element => {
@@ -398,6 +398,26 @@ function correctionSheet(corArray, luna) {
         // appends the row <tr> into <tbody>
         mytablebody.appendChild(mycurrent_row);
     }
+    {
+        let myTotalCorrection = document.createElement("tr");
+        const corrTotal = ["Total", "", luna[4], luna[5], luna[0]]
+        for (let index = 0; index < corrTotal.length; index++) {
+            // for (const item in corTemp) {
+            // creates a <td> element
+            let mycurrent_cell = document.createElement("td");
+            // creates a Text Node
+            let currenttext = document.createTextNode(corrTotal[index]);
+            // appends the Text Node we created into the cell <td>
+            mycurrent_cell.appendChild(currenttext);
+            // appends the cell <td> into the row <tr>
+            myTotalCorrection.appendChild(mycurrent_cell);
+            //}
+
+        }
+        mytablebody.appendChild(myTotalCorrection);
+
+    }
+    luna = [];
 
 }
 
