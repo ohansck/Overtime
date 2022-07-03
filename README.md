@@ -9,4 +9,3 @@ You can further create your time sheet correction.
 
 This project is tailored to a specific company, but can be modified to suit your needs. 
 
-https://www.shifttoolbox.netlify.app 
